@@ -1,1 +1,1 @@
-# memories-api
+# memories
