@@ -1,8 +1,12 @@
+
 var express = require('express');
 var app = express();
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  
+	res.json({ message: "Hello World from heroku for project memories ;) !!!" });
+
+
 });
 
 app.listen(process.env.PORT, function () {
