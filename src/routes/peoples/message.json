@@ -1,0 +1,12 @@
+{
+	"SUCCESS" : {
+		"CREATE": "%user% was created correctly.",
+		"EDIT": "",
+		"DELETE": ""
+	},
+	"ERROR" : {
+		"CREATE": "Internal error: %message%",
+		"EDIT": "",
+		"DELETE": ""
+	}
+}

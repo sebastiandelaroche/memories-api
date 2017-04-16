@@ -1,14 +1,23 @@
 
-var express = require('express');
-var app = express();
+// @todo mejorar todo el bootstrap del server
 
-app.get('/', function (req, res) {
-  
-	res.json({ message: "Hello World from heroku for project memories ;) !!!" });
+const http = require('http');
+const app = require('./app');
+
+const port = process.env.PORT || 3000;
+const server = http.createServer(app).listen(port);
 
 
+server.on('error', err => {
+
+	console.log('err', err);
+	
 });
 
-app.listen(process.env.PORT, function () {
-  console.log('Example app listening on port ' + process.env.PORT);
+server.on('listening', () => {
+
+    const addr = server.address();
+    const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
+    console.log(`Listening on ${bind}`);
+
 });
