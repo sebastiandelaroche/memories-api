@@ -2,16 +2,13 @@
 // @todo mejorar todo el bootstrap del server
 
 const http = require('http');
-const app = require('./app');
+const app  = require('./app');
 
-const port = process.env.PORT || 3000;
+const port   = process.env.PORT || 3009;
 const server = http.createServer(app).listen(port);
 
-
 server.on('error', err => {
-
 	console.log('err', err);
-	
 });
 
 server.on('listening', () => {

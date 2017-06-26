@@ -4,7 +4,7 @@
   "description": "memories api",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "express-formidable": "^1.0.0",
+    "help-modules": "git+https://github.com/sebastiandelaroche/help-modules.git",
     "mongoose": "^4.9.3"
   }
 }
