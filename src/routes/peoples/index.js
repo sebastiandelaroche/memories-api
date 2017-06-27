@@ -23,7 +23,7 @@ const MESSAGES = JSON.parse(fs.readFileSync( __dirname + '/message.json', 'utf8'
  * 	@param {[Array]}  [families] 	[Ids Families of people]
  * 	
  */
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
 
 	const { user, names, lastName, birthday } = req.body;
 	const fieldsValidate = ['user', 'names', 'lastName'];
@@ -35,25 +35,49 @@ router.post('/', (req, res, next) => {
 		}
 	}
 
-	let people = new Peoples({
-		user,
-		name: { first: names,  last: lastName },
-		birthday,
-		families: []
-	});
+	try {
 
-	people.save().then(result => {
+		let avatar;
+		if (typeof req.files !== 'undefined' && req.files.length !== 0) {
 
-		const message = MESSAGES.SUCCESS.CREATE.replace('%user%', result.user);
-		res.status(200).json(helpers.response(message, result, 200));
+			const [file] = req.files;
 
-	})
-	.catch(err => {
+			const resultUpload = await help.uploadFile({
+				stream: file.buffer,
+				dest: `tmp`,
+				name: file.originalname
+			});
+
+			avatar = `${resultUpload.name}`; 
+		}
+
+		const people = new Peoples({
+			user,
+			name: { first: names,  last: lastName },
+			birthday,
+			avatar
+		});
+
+		people.save().then(result => {
+
+			const message = MESSAGES.SUCCESS.CREATE.replace('%user%', result.user);
+			res.status(200).json(helpers.response(message, result, 200));
+
+		})
+		.catch(err => {
+
+			const message = MESSAGES.ERROR.CREATE.replace('%message%', err.message);
+			res.status(500).json(helpers.response(message, null, 500));
+
+		})
+
+	} catch (err) {
 
 		const message = MESSAGES.ERROR.CREATE.replace('%message%', err.message);
 		res.status(500).json(helpers.response(message, null, 500));
 
-	})
+	}
+
 
 });
 

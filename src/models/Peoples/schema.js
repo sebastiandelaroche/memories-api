@@ -11,13 +11,13 @@ const Peoples = new Schema({
 	},
 
 	name: { 
-		first: String, 
+		first: String,
 		last: String 
 	},
 
 	birthday: Date,
-	
-	families: Array
+
+	avatar: String
 	
 });
 
